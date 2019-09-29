@@ -1,9 +1,12 @@
 require('./models/User');
+require('./models/Track');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/auth');
 const authGuard = require('./middlewares/authGuard');
+
+const authRoutes = require('./routes/auth');
+const trackRoutes = require('./routes/tracks');
 
 // Mongo Setup
 const mongoURI =
@@ -22,10 +25,15 @@ mongoose.connection.on('error', err =>
 const app = express();
 
 app.use(bodyParser.json());
+
+// Define routes here
 app.use(authRoutes);
+app.use(trackRoutes);
 
 app.get('/', authGuard, (req, res) => {
   res.json({ message: 'Hello App!' });
 });
 
-app.listen(3000, () => console.log('Listening on port 3000...'));
+app.listen(process.env.PORT || 3000, () =>
+  console.log(`Listening on port ${process.env.PORT || 3000}...`)
+);
