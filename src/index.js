@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const authGuard = require('./middlewares/authGuard');
 
 const authRoutes = require('./routes/auth');
-const trackRoutes = require('./routes/tracks');
+const trackRoutes = require('./routes/track');
 
 // Mongo Setup
 const mongoURI =
