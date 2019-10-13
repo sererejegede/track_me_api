@@ -20,7 +20,7 @@ router.post('/track', async (req, res) => {
     });
   }
 
-  const track = new Track({name, location, user_id: req.user._id});
+  const track = new Track({name, locations, user_id: req.user._id});
   await track.save();
 
   res.status(200).json({
