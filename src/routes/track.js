@@ -17,7 +17,7 @@ router.get('/track', async (req, res) => {
 router.post('/track', async (req, res) => {
   const { name, locations } = req.body;
   if (!name || !locations) {
-    res.status(422).json({
+    return res.status(422).json({
       error: 'You must provide a name and locations'
     });
   }
