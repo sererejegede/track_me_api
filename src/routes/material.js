@@ -171,20 +171,22 @@ const filterData = (searchTerm, data) => {
 
 router.get('/material', async (req, res) => {
   let data = materials
-  let pageCount = Math.ceil(data.length / 10);
-  let page = parseInt(req.query.page);
+  let { pageSize, page, query } = req.query
+  page = parseInt(page);
+  pageSize = parseInt(pageSize);
+  let pageCount = Math.ceil(data.length / pageSize);
   if (!page) { page = 1;}
   if (page > pageCount) {
     page = pageCount
   }
-  if (req.query.query) {
-    data = filterData(req.query.query, materials)
-    pageCount = Math.ceil(data.length / 10);
+  if (query) {
+    data = filterData(query, materials)
+    pageCount = Math.ceil(data.length / pageSize);
   }
   return res.json({
-    data: data.slice(page * 10 - 10, page * 10),
-    pageCount,
+    data: data.slice(page * pageSize - pageSize, page * pageSize),
     page,
+    pageSize,
     total: data.length
   })
 });
