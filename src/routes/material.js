@@ -177,8 +177,8 @@ router.get('/material', async (req, res) => {
   if (page > pageCount) {
     page = pageCount
   }
-  if (req.query.searchTerm) {
-    data = filterData(req.query.searchTerm, materials)
+  if (req.query.query) {
+    data = filterData(req.query.query, materials)
     pageCount = Math.ceil(data.length / 10);
   }
   return res.json({
