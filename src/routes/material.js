@@ -176,12 +176,12 @@ router.get('/material', async (req, res) => {
   pageSize = parseInt(pageSize);
   let pageCount = Math.ceil(data.length / pageSize);
   if (!page) { page = 1;}
-  if (page > pageCount) {
-    page = pageCount
-  }
   if (query) {
     data = filterData(query, materials)
     pageCount = Math.ceil(data.length / pageSize);
+  }
+  if (page > pageCount) {
+    page = pageCount
   }
   return res.json({
     data: data.slice(page * pageSize - pageSize, page * pageSize),
