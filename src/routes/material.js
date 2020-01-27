@@ -172,6 +172,11 @@ const filterData = (searchTerm, data) => {
 router.get('/material', async (req, res) => {
   let data = materials
   let { pageSize, page, query } = req.query
+  if (!pageSize) {
+    return res.status(400).json({
+      error: 'Page size is required'
+    })
+  }
   page = parseInt(page);
   pageSize = parseInt(pageSize);
   let pageCount = Math.ceil(data.length / pageSize);
@@ -183,12 +188,18 @@ router.get('/material', async (req, res) => {
   if (page > pageCount) {
     page = pageCount
   }
-  return res.json({
+  return res.status(200).json({
     data: data.slice(page * pageSize - pageSize, page * pageSize),
     page,
     pageSize,
     total: data.length
   })
 });
+
+router.get('/material/:id', async (req, res) => {
+  res.status(200).json({
+    data: materials.find(material => material.key === parseInt(req.params.id))
+  })
+})
 
 module.exports = router;
