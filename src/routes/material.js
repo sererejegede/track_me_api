@@ -171,7 +171,12 @@ const filterData = (searchTerm, data) => {
 
 router.get('/material', async (req, res) => {
   let data = materials
-  let { pageSize, page, query } = req.query
+  let { pageSize, page, query, showError } = req.query
+  if (showError == 'true') {
+    return res.status(422).json({
+      error: 'Showing custom error'
+    })
+  }
   if (!pageSize) {
     return res.status(400).json({
       error: 'Page size is required'
